@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN">
+<!-- $Copyright(c) 2008 Progress Software Corporation. All rights reserved.$ -->
+<!-- $Copyright (c) 2013 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.$ -->
+<!-- Use, reproduction, transfer, publication or disclosure is prohibited except as specifically provided for in your License Agreement with Software AG -->
+<html>
+   <head>
+      <meta http-equiv="content-type" content=
+      "text/html; charset=windows-1252">
+      <title>
+         Weather Demo
+      </title>
+<style type="text/css">
+BODY {
+ background-color: #ffffff;
+ font-size: 10pt;
+ font-family: Arial, Helvetica, sans-serif
+ margin-top: 0 pt;
+ margin-bottom: 0 pt;
+}
+
+H1 {
+ text-align: left;
+ font-weight: bold;
+ background-color: Transparent;
+ border-bottom-style: None;
+ margin-top: 0pt;
+ font-size: 16pt;
+ font-family: Arial, Helvetica, sans-serif;
+ line-height: Normal;
+ margin-bottom: 13.5pt;
+}
+
+H2 {
+ text-align: left;
+ font-weight: bold;
+ font-size: 14pt;
+ font-family: Arial, Helvetica, sans-serif;
+ margin-top: 0pt;
+ margin-bottom: 0pt;
+ color: #000000;
+}
+
+H3 {
+ text-align: left;
+ font-weight: bold;
+ font-family: Arial, Helvetica, sans-serif;
+ margin-left: 0pt;
+ margin-right: 0pt;
+ margin-top: 0pt;
+ margin-bottom: 0pt;
+ font-size: 12pt;
+}
+
+P {
+ text-align: left;
+ font-size: 10pt;
+ font-family: Arial, Helvetica, sans-serif;
+ margin-left: 0pt;
+ margin-top: 5pt;
+ margin-bottom: 5pt;
+}
+
+LI {
+ text-align: left;
+ font-size: 10pt;
+ font-family: Arial, Helvetica, sans-serif;
+ margin-left: 0pt;
+ margin-top: 5pt;
+ margin-bottom: 5pt;
+}
+
+TD {
+ font-size: 10pt;
+ font-family: Arial, Helvetica, sans-serif;
+ margin-left: 0pt;
+ margin-top: 5pt;
+ margin-bottom: 5pt;
+}
+
+TH {
+ font-size: 10 pt;
+ font-family: Arial, Helvetica, sans-serif;
+ margin-left: 0pt;
+ margin-top: 5pt;
+ margin-bottom: 5pt;
+ background-color: #E1E1E1;
+}
+</style>
+   </head>
+   <body>
+      <p>
+         <img alt="Apama" src="readme_files/Apama_logo.png">
+      </p>
+      <h1>
+         The Weather Demo
+      </h1>
+      <p>
+         This demo provides an example of a dashboard for viewing DataViews
+         created with MonitorScript and for interacting with DataViews with the
+         dashboard Send Event command. It shows simulated weather metrics for a
+         small number of cities.
+      </p>
+      <p>
+         A single MonitorScript file and a single dashboard file define the
+         behavior of this demo.
+      </p>
+      <p>
+         The Weather.mon file defines a DataView and the simulation behavior to
+         provide random values for each city. It defines a list of initial
+         locations in the <strong>locations</strong> variable: London, New
+         York, Tokyo and Sydney. For each location it simulates temperature,
+         humidity and visibility. Interactions with this monitor are through
+         <strong>AddLocation</strong> and <strong>DeleteLocation</strong>
+         events, sent by the dashboard.
+      </p>
+      <p>
+         The Weather demo contains the following files:
+      </p>
+      <ul>
+         <li>
+            <strong>Dashboards</strong> 
+            <ul>
+               <li>
+                  <code>Weather.rtv</code> &mdash; The main display panel that
+                  shows all values for all locations. It also sends events to
+                  the correlator to add and delete locations.
+               </li>
+            </ul>
+         </li>
+         <li>
+            <strong>MonitorScript</strong> 
+            <ul>
+               <li>
+                  <code>Weather.mon</code> &mdash; Defines a DataView and
+                  simple simulator behavior for weather data, and bootstraps
+                  this for a number of cities.
+               </li>
+            </ul>
+         </li>
+      </ul>
+      <h3>
+         Suggested Modifications to the Weather Demo
+      </h3>
+      <p>
+         To add a metric for wind speed to the statistics:
+      </p>
+      <ol>
+         <li>
+            Open the Weather.mon file.
+         </li>
+         <li>
+            Add a new column to the <strong>DataView</strong> by adding a new
+            entry to the <strong>fieldNames</strong> and
+            <strong>fieldTypes</strong> parameters. The new entry is
+            <strong>windspeed</strong>, of type <strong>integer</strong>:<br>
+            <br>
+             
+            <table border="0" cellpadding="8" cellspacing="0" width="100%">
+               <tr>
+                  <td bgcolor="E1E1E1">
+                     <code>add.fieldNames :=
+                     [&quot;location&quot;,&quot;temperature&quot;,&quot;humidity&quot;,&quot;visibility&quot;,&rdquo;<font
+                      color=
+                     "maroon"><strong>windspeed</strong></font>&rdquo;];</code>
+                     <br>
+                      <code>add.fieldTypes :=
+                     [&quot;string&quot;,&quot;integer&quot;,&quot;integer&quot;,&quot;integer&quot;,&rdquo;<font
+                      color=
+                     "maroon"><strong>integer</strong></font>&rdquo;];</code> 
+                  </td>
+               </tr>
+            </table>
+         </li>
+         <li>
+            In the <strong>locationHandler</strong> action, add a new local
+            variable, <strong>windspeed</strong>, of type
+            <strong>integer</strong>
+         </li>
+         <li>
+            Provide a new random value for <strong>windspeed</strong> (between
+            1 and 20) just below the assignment for
+            <strong>visibility</strong>, for example:<br>
+            <br>
+             
+            <table border="0" cellpadding="8" cellspacing="0" width="100%">
+               <tr>
+                  <td bgcolor="E1E1E1">
+                     <code>random := 20;</code><br>
+                      <code>windspeed := 1 + random.rand();</code> 
+                  </td>
+               </tr>
+            </table>
+         </li>
+         <li>
+            In the definition of the new <strong>DataView</strong> item, add
+            the new value for the <strong>windspeed</strong> at the end, for
+            example:<br>
+            <br>
+             
+            <table border="0" cellpadding="8" cellspacing="0" width="100%">
+               <tr>
+                  <td bgcolor="E1E1E1">
+                     <code>item.fieldValues :=
+                     [location,temp.toString(),humidity.toString(),visibility.toString(),<font
+                      color=
+                     "maroon"><strong>windspeed.toString()</strong></font>];</code>
+                     
+                  </td>
+               </tr>
+            </table>
+         </li>
+         <li class="MsoNormal">
+            Near the bottom of the file is a repetitive timer, <strong>on all
+            wait (5.0)</strong>, which updates the values for this location
+            every five seconds. To update the value for windspeed with a new
+            random number, add the following code that mirrors the pattern that
+            already exists for the other metrics:<br>
+            <br>
+             
+            <table border="0" cellpadding="8" cellspacing="0" width="100%">
+               <tr>
+                  <td bgcolor="E1E1E1">
+                     <code>temp := (temp - 2) + random.rand();<br>
+                      humidity := (humidity - 2) + random.rand();<br>
+                      visibility := (visibility - 2) + random.rand();<br>
+                      <font color="maroon"><strong>windspeed := (windspeed - 2)
+                     + random.rand();</strong></font></code> 
+                  </td>
+               </tr>
+               <tr>
+                  <td bgcolor="E1E1E1">
+                     <code>if (temp &lt; 0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     {temp := 0;}<br>
+                      if (humidity &lt; 0)&nbsp;&nbsp; {humidity :=
+                     0;}<br>
+                      if (visibility &lt; 0) {visibility := 0;}<br>
+                      <font color="maroon"><strong>if (windspeed &lt; 0) then
+                     {windspeed := 0;}</strong></font></code> 
+                  </td>
+               </tr>
+               <tr>
+                  <td bgcolor="E1E1E1">
+                     <code>if (temp &gt;
+                     99)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {temp :=
+                     99;}<br>
+                      if (humidity &gt; 99)&nbsp;&nbsp; {humidity :=
+                     99;}<br>
+                      if (visibility &gt; 99) {visibility := 99;}<br>
+                      <font color="maroon"><strong>if (windspeed &gt; 99) then
+                     {windspeed := 99;}</strong></font></code> 
+                  </td>
+               </tr>
+            </table>
+         </li>
+         <li>
+            Append the new value to the update field values near the bottom of
+            the file:<br>
+            <br>
+             
+            <table border="0" cellpadding="8" cellspacing="0" width="100%">
+               <tr>
+                  <td bgcolor="E1E1E1">
+                     <code>update.fieldValues :=
+                     [location,temp.toString(),humidity.toString(),visibility.toString()<font
+                      color=
+                     "maroon">,<strong>windspeed.toString()</strong>];</font></code>
+                     
+                  </td>
+               </tr>
+            </table>
+         </li>
+         <li>
+            Save the file and restart the project.
+         </li>
+         <li>
+            Open <code>Weather.rtv</code> in Apama Dashboard Builder.
+         </li>
+         <li>
+            Select the <strong>Weather Conditions Sample</strong> table at the
+            top of the dashboard. In the <strong>Data</strong> section, either
+            double-click or right-click the <strong>valueTable</strong>
+            property and select <strong>Attach toData &gt; APAMA</strong>. In
+            the <strong>Attach to Apama</strong> dialog that opens, click
+            <strong>...</strong> next to the <strong>Display variables</strong>
+            field. In the <strong>Select Columns</strong> dialog that opens,
+            select the <strong>windspeed</strong> value from the
+            <strong>Available Columns</strong> on the left, and click
+            <strong>Add</strong> to move it into the <strong>Selected
+            Columns</strong> on the right. Click <strong>OK</strong> to close
+            this dialog, then click <strong>OK</strong> again to close the
+            Attach to Apama dialog. Observe that the Weather Conditions Sample
+            table now shows the windspeed for each location in the table.
+         </li>
+         <li>
+            Select one of the large colored rectangles (for example, the red
+            <strong>temperature</strong>). Copy the rectangle (use the context
+            menu or CTRL-C to make a copy). Paste this copy below the Apama
+            logo. Click in the new rectangle, then double-click (or right-click
+            and select <strong>Attach toData &gt; APAMA</strong>) the
+            <strong>valueString</strong> property. In the <strong>Display
+            variables</strong> field of the <strong>Attach to Apama</strong>
+            dialog, select <strong>windspeed</strong> instead of
+            <strong>temperature</strong>. Click <strong>OK</strong>.
+         </li>
+         <li>
+            Reload the dashboard in the Dashboard Viewer.
+         </li>
+      </ol>
+      <p>
+         Observe that the dashboard now displays windspeed values for each
+         location.
+      </p>
+      <p>
+         &nbsp;
+      </p>
+   </body>
+</html>
+

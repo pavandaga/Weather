@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IUE id="ApamaSamples_Weather"  xmlns="http://www.jaxb.iue.branding.tools.progress.com">
+	<name>Weather</name>
+	<category>demo</category>
+	<publicationDate>2011-08-15</publicationDate>
+	<shortDescription>This demo provides an example of a dashboard for viewing DataViews created with EPL and for interacting with the DataViews from dashboards using the Send Event command.</shortDescription>
+	<description>This demo provides an example of a dashboard for viewing DataViews created with EPL and for interacting with the DataViews from dashboards using the Send Event command. The EPL file Weather.mon defines a DataView and simulation behavior required to provide random values of temperature, humidity and visibility for each city. It also defines an initial list of locations. The dashboard sends events to add or remove cities from this list.</description>
+	<image>weather.jpg</image>
+	<size>1000</size>
+	<metadata>
+		<contributionType id="com.progress.tools.branding.iue.apama.customsampletype">
+			<properties key="samplePath">
+				<simpleValue>../../Weather</simpleValue>
+			</properties>
+		</contributionType>
+		<filters>
+			<topic>General</topic>
+			<complexity>Getting Started</complexity>
+			<productsSupported>
+				<product version="[9.9.0, 12.0.0]" id="com.apama.studio.product">
+					<capability>Apama</capability>
+				</product>
+			</productsSupported>
+		</filters>
+	</metadata>
+	<moredetails>../readme.htm</moredetails>
+</IUE>
